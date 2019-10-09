@@ -24,15 +24,9 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
+        command: buildAndPush
         dockerfile: '$(Build.SourcesDirectory)/vs2017-llvm-win1803/Dockerfile'
-        tags: |
-          $(tag)
-    - task: Docker@2
-      displayName: Push image
-      inputs:
         containerRegistry: dockerHub
         repository: mun-windows-builder
-        command: push
         tags: |
           $(tag)
