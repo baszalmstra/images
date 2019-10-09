@@ -10,6 +10,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  imageName: 
 
 stages:
 - stage: Build
@@ -25,5 +26,14 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/vs2017-llvm-win1803/Dockerfile'
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Push image
+      inputs:
+        containerRegistry: |
+          $(dockerHub)
+        repository: mun-windows-builder
+        command: push
         tags: |
           $(tag)
