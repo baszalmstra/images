@@ -19,7 +19,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'win1803'
     steps:
     - task: Docker@2
       displayName: Build an image
