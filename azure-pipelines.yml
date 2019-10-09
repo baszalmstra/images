@@ -27,6 +27,6 @@ stages:
         command: buildAndPush
         dockerfile: '$(Build.SourcesDirectory)/vs2017-llvm-win1803/Dockerfile'
         containerRegistry: dockerHub
-        repository: mun-windows-builder
+        repository: baszalmstra/mun-windows-builder
         tags: |
           $(tag)

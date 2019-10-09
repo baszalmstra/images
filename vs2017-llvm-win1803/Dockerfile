@@ -19,3 +19,9 @@ RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
 
 ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
 CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
+
+FROM base as llvm
+
+RUN powershell.exe -ExecutionPolicy RemoteSigned `
+    iex (new-object net.webclient).downloadstring('https://get.scoop.sh'); `
+    scoop install python git cmake
