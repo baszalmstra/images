@@ -18,17 +18,18 @@ RUN C:\TEMP\Install.cmd C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --n
     --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended`
     --installPath C:\BuildTools
 
-ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
-CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
-
 FROM base as llvm
 
 RUN powershell.exe -ExecutionPolicy RemoteSigned `
     iex (new-object net.webclient).downloadstring('https://get.scoop.sh'); `
     scoop install python git cmake
 
-RUN git clone --single-branch --branch llvmorg-7.1.0 --depth 1 https://github.com/llvm/llvm-project.git && `
+RUN C:\BuildTools\Common7\Tools\VsDevCmd.bat && `
+    git clone --single-branch --branch llvmorg-7.1.0 --depth 1 https://github.com/llvm/llvm-project.git && `
     cd llvm-project && mkdir build && cd build && `
     cmake -DLLVM_ENABLE_PROJECTS=clang,lld -G "Visual Studio 15 2017" -A x64 -Thost=x64 ..\llvm && `
     cmake --build . && `
     cmake -DCMAKE_INSTALL_PREFIX=C:\LLVM -P cmake_install.cmake
+
+ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
+CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
