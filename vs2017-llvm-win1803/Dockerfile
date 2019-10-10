@@ -27,7 +27,7 @@ RUN powershell.exe -ExecutionPolicy RemoteSigned `
     scoop install python git cmake
 
 RUN git clone --single-branch --branch llvmorg-7.1.0 --depth 1 https://github.com/llvm/llvm-project.git && `
-    cd llvm-project && mkdir build && cd build `
-    cmake -DLLVM_ENABLE_PROJECTS=clang,lld -G "Visual Studio 15 2017" -A x64 -Thost=x64 ..\llvm `
-    cmake --build . `
+    cd llvm-project && mkdir build && cd build && `
+    cmake -DLLVM_ENABLE_PROJECTS=clang,lld -G "Visual Studio 15 2017" -A x64 -Thost=x64 ..\llvm && `
+    cmake --build . && `
     cmake -DCMAKE_INSTALL_PREFIX=C:\LLVM -P cmake_install.cmake
